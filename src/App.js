@@ -102,43 +102,45 @@ export default function App() {
           ) : (
             <div>
               {todos &&
-                todos?.map((each, index) => {
-                  return (
-                    <div className="eachItemContainer">
-                      <div className="item-container">
-                        <p className={each?.active ? ' decoration' : 'text'}>
-                          {each?.name}
-                        </p>
+                todos
+                  ?.sort((a, b) => (a.id > b.id ? 1 : -1))
+                  .map((each, index) => {
+                    return (
+                      <div className="eachItemContainer">
+                        <div className="item-container">
+                          <p className={each?.active ? ' decoration' : 'text'}>
+                            {each?.name}
+                          </p>
+                        </div>
+                        <div className="buttonContainer">
+                          <button
+                            className="btn btn-mark"
+                            onClick={() => markedTask(each?.id)}
+                          >
+                            Mark
+                          </button>
+                          <button
+                            className="btn btn-edit"
+                            onClick={() =>
+                              updateTaskFun({
+                                id: each?.id,
+                                name: each?.name,
+                                active: each?.active,
+                              })
+                            }
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="btn btn-delete"
+                            onClick={() => deleteTodos(each?.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
-                      <div className="buttonContainer">
-                        <button
-                          className="btn btn-mark"
-                          onClick={() => markedTask(each?.id)}
-                        >
-                          Mark
-                        </button>
-                        <button
-                          className="btn btn-edit"
-                          onClick={() =>
-                            updateTaskFun({
-                              id: each?.id,
-                              name: each?.name,
-                              active: each?.active,
-                            })
-                          }
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-delete"
-                          onClick={() => deleteTodos(each?.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
             </div>
           )}
         </div>
